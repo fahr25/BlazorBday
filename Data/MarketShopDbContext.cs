@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using BlazorBday.Models;
 
 namespace BlazorBday.Data
 {
@@ -12,8 +13,7 @@ namespace BlazorBday.Data
         {
         }
 
-        public DbSet<Product> Cards { get; set; }
+        public DbSet<Card> Cards { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Gift> Gifts { get; set; }
     }
 }

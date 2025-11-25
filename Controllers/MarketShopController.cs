@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlazorBday.Data;
+using BlazorBday.Models;
 
 namespace BlazorBday.Controllers
 {
@@ -20,24 +21,18 @@ namespace BlazorBday.Controllers
         }
 
         [HttpGet("cards")]
-        public async Task<IActionResult<List<Card>>> GetAllCards()
+        public async Task<ActionResult<List<Card>>> GetAllCards()
         {
-            var cards = await _db.Cards.ToListAsync().OrderByDescending(c => c.Id).ToList();
+            var cards = await _db.Cards.ToListAsync();
             return Ok(cards);
         }
 
         [HttpGet("categories")]
-        public async Task<IActionResult<List<Category>>> GetAllCategories()
+        public async Task<ActionResult<List<Category>>> GetAllCategories()
         {
             var categories = await _db.Categories.ToListAsync();
             return Ok(categories);
         }
 
-        [HttpGet("gifts")]
-        public async Task<IActionResult<List<Gift>>> GetAllGifts()
-        {
-            var gifts = await _db.Gifts.ToListAsync();
-            return Ok(gifts);
-        }
     }
 }

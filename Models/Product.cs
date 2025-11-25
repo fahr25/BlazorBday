@@ -1,4 +1,4 @@
-namespace BlazorBday.Model
+namespace BlazorBday.Models
 
 {
     public abstract class Product
@@ -15,7 +15,7 @@ namespace BlazorBday.Model
         public int MinAge { get; set; }
         public int MaxAge { get; set; }
 
-        public Category? Category { get; set; }
+        public int CategoryId { get; set; }
         public string SubCategory { get; set; } = string.Empty;
     }
 }

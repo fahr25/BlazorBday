@@ -1,4 +1,4 @@
-namespace BlazorBday.Model
+namespace BlazorBday.Models
 
 {
     public class Category
