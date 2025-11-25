@@ -1,4 +1,5 @@
 namespace BlazorBday.Model
+
 {
     public class Gift : Product
     {
