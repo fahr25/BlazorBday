@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddScoped<CartService>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddHttpClient();
