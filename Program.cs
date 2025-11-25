@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddControllers();
+
 builder.Services.AddHttpClient();
 builder.Services.AddSqlite<MarketShopDbContext>("Data Source=Data/marketshop.db");
 
@@ -29,6 +31,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
 // Initialize database context
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
