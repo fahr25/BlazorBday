@@ -36,15 +36,18 @@ app.MapRazorComponents<App>()
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
 // Initialize database context
-var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
-using (var scope = scopeFactory.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<MarketShopDbContext>();
+// var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+// using (var scope = scopeFactory.CreateScope())
+// {
+    
+// }
 
-    if (db.Database.EnsureCreated())
-    {
-        MarketSeedData.Initialize(db);
-    }
+// Seed the database with initial data
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<MarketShopDbContext>();
+    MarketSeedData.Initialize(context);
 }
 
 app.Run();

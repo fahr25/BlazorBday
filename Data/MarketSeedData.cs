@@ -9,19 +9,27 @@ namespace BlazorBday.Data
     {
         public static void Initialize(MarketShopDbContext context)
         {
-            // Category seed data 
-            var categories = new List<Category>
-            {
-                new Category { Id = 1, Name = "Birthday Card" },
-                new Category { Id = 2, Name = "Book" },
-                new Category { Id = 3, Name = "Gift" },
-                new Category { Id = 4, Name = "Sweet Treat" }
-            };
-            context.Categories.AddRange(categories);
-            context.SaveChanges();
+            // Ensure the database is created (if not using migrations)
+            context.Database.EnsureCreated();
 
-            // Card seed data
-            var cards = new List<Card>
+            if (!context.Categories.Any())
+            {
+                // Category seed data 
+                var categories = new List<Category>
+                {
+                    new Category { Id = 1, Name = "Birthday Card" },
+                    new Category { Id = 2, Name = "Book" },
+                    new Category { Id = 3, Name = "Gift" },
+                    new Category { Id = 4, Name = "Sweet Treat" }
+                };
+                context.Categories.AddRange(categories);
+                context.SaveChanges();
+            }
+
+            if (!context.Cards.Any())
+            {
+                // Card seed data
+                var cards = new List<Card>
                 {
                     new Card
                     {
@@ -102,10 +110,12 @@ namespace BlazorBday.Data
                         Notes = "Pairs well with ribbon or small gifts."
                     }
                 };
-
                 context.Cards.AddRange(cards);
                 context.SaveChanges();
+            }
 
+            if (!context.Books.Any())
+            {
                 // Book seed data (example)
                 var books = new List<Book>
                 {
@@ -113,7 +123,7 @@ namespace BlazorBday.Data
                         Id = 1,
                         Name = "The Birthday Surprise",
                         Description = "A sweet story for little ones.",
-                        Image = "/images/books/birthday_surprise.jpg",
+                        Image = "/images/books/book1.png",
                         Points = 5,
                         Inventory = 40,
                         MinAge = 0,
@@ -125,7 +135,7 @@ namespace BlazorBday.Data
                         Id = 2,
                         Name = "Big Party",
                         Description = "Party planning for kids.",
-                        Image = "/images/books/big_party.jpg",
+                        Image = "/images/books/book2.png",
                         Points = 7,
                         Inventory = 20,
                         MinAge = 4,
@@ -136,6 +146,8 @@ namespace BlazorBday.Data
                 };
                 context.AddRange(books);
                 context.SaveChanges();
+            }
+                
 
         }
     }
