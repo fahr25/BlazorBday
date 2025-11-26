@@ -1,0 +1,47 @@
+@page "/shop/login"
+
+@inject NavigationManager NavigationManager
+
+<PageTitle>Shop - Start</PageTitle>
+
+
+<!-- TODO: Add family login and functionality -->
+<div class="card" style="width: 75%; margin: auto;">
+    <div class="card-body">
+
+        @* <h5 class="card-title">Family Login</h5> *@
+
+        <form>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" @bind="email">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" @bind="password">
+            </div>
+            
+            <button type="button" class="btn btn-outline-primary" onclick="intakeSubmit">Login</button>
+        </form>
+
+    </div>
+</div>
+
+@code {
+    private string email = string.Empty;
+    private string password = string.Empty;
+
+    private void intakeSubmit()
+    {
+        // TODO: Mock validation - replace with actual credential check
+        
+        if (email == "admin@email.com" && password == "admin123")
+        {
+            // TODO: fix navigation to intake form
+            NavigationManager.NavigateTo("/shop/intake");
+        }
+
+        
+    }
+}

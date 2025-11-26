@@ -486,3 +486,5 @@ $RECYCLE.BIN/
 # Data files
 *.db
 *.sqlitedb
+*.db-wal
+*.db-shm

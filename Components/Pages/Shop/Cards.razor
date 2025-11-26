@@ -52,6 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // TODO: Add error handling
         birthdayCards = await HttpClient.GetFromJsonAsync<List<Card>>(NavigationManager.BaseUri + "api/marketshop/cards");
     }
 }

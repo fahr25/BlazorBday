@@ -1,0 +1,19 @@
+﻿@page "/shop/intake"
+
+@inject NavigationManager NavigationManager
+
+<PageTitle>Shop - User Intake</PageTitle>
+
+<h3>UserIntake</h3>
+<!-- TODO: Create user intake form -->
+
+<button class="btn btn-outline-danger" @onclick="OnSubmit">Next</button>
+
+@code {
+
+    private void OnSubmit()
+    {
+        // TODO: Fix navigation to cards page
+        NavigationManager.NavigateTo("/shop/cards");
+    }
+}
