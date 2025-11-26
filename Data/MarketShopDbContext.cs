@@ -15,5 +15,6 @@ namespace BlazorBday.Data
 
         public DbSet<Card> Cards { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Book> Books { get; set; }
     }
 }

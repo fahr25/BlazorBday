@@ -105,6 +105,38 @@ namespace BlazorBday.Data
 
                 context.Cards.AddRange(cards);
                 context.SaveChanges();
+
+                // Book seed data (example)
+                var books = new List<Book>
+                {
+                    new Book {
+                        Id = 1,
+                        Name = "The Birthday Surprise",
+                        Description = "A sweet story for little ones.",
+                        Image = "/images/books/birthday_surprise.jpg",
+                        Points = 5,
+                        Inventory = 40,
+                        MinAge = 0,
+                        MaxAge = 6,
+                        CategoryId = 2,
+                        Author = "A. Author"
+                    },
+                    new Book {
+                        Id = 2,
+                        Name = "Big Party",
+                        Description = "Party planning for kids.",
+                        Image = "/images/books/big_party.jpg",
+                        Points = 7,
+                        Inventory = 20,
+                        MinAge = 4,
+                        MaxAge = 10,
+                        CategoryId = 2,
+                        Author = "B. Writer"
+                    }
+                };
+                context.AddRange(books);
+                context.SaveChanges();
+
         }
     }
 }
