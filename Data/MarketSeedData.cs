@@ -151,9 +151,9 @@ namespace BlazorBday.Data
             if (!context.SweetTreats.Any())
             {
                 // SweetTreat seed data (example)
-                var sweetTreats = new List<SweetTreat>
+                var sweetTreats = new List<Treat>
                 {
-                    new SweetTreat {
+                    new Treat {
                         Id = 1,
                         Name = "Chocolate Fudge Cake",
                         Description = "Rich and creamy chocolate fudge cake.",
@@ -164,7 +164,7 @@ namespace BlazorBday.Data
                         MaxAge = 99,
                         CategoryId = 4,
                     },
-                    new SweetTreat {
+                    new Treat {
                         Id = 2,
                         Name = "Lollipops",
                         Description = "Colorful assorted lollipops.",
@@ -177,7 +177,7 @@ namespace BlazorBday.Data
                         Lettering = "Happy BDay Jeff!",
                         LetteringColor = "Red"
                     },
-                    new SweetTreat {
+                    new Treat {
                         Id = 3,
                         Name = "Cupcakes",
                         Description = "Vanilla cupcakes with sprinkles.",
@@ -188,7 +188,7 @@ namespace BlazorBday.Data
                         MaxAge = 99,
                         CategoryId = 4,
                     },
-                    new SweetTreat {
+                    new Treat {
                         Id = 4,
                         Name = "Pumpkin Pie",
                         Description = "Assorted fruit-flavored gummy bears.",
