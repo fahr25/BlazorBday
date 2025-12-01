@@ -14,8 +14,10 @@ public class MarketShopDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-        public DbSet<Card> Cards { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Book> Books { get; set; }
-    }
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Subcategory> Subcategories => Set<Subcategory>();
+    public DbSet<Agency> Agencies => Set<Agency>();
 }
