@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BlazorBday.Models;
 
-public class Category
+public class Subcategory
 {
     [Key]
     public int Id { get; set; }
@@ -18,7 +18,10 @@ public class Category
 
     public int DisplayOrder { get; set; }
 
-    // Navigation properties
-    public ICollection<Subcategory> Subcategories { get; set; } = new List<Subcategory>();
+    // Foreign key
+    public int CategoryId { get; set; }
+
+    // Navigation property
+    public Category Category { get; set; } = null!;
     public ICollection<Product> Products { get; set; } = new List<Product>();
 }
