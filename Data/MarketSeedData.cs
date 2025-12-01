@@ -147,7 +147,63 @@ namespace BlazorBday.Data
                 context.AddRange(books);
                 context.SaveChanges();
             }
-                
+            
+            if (!context.SweetTreats.Any())
+            {
+                // SweetTreat seed data (example)
+                var sweetTreats = new List<Treat>
+                {
+                    new Treat {
+                        Id = 1,
+                        Name = "Chocolate Fudge Cake",
+                        Description = "Rich and creamy chocolate fudge cake.",
+                        Image = "/images/treats/cake-slice.png",
+                        Points = 16,
+                        Inventory = 50,
+                        MinAge = 0,
+                        MaxAge = 99,
+                        CategoryId = 4,
+                    },
+                    new Treat {
+                        Id = 2,
+                        Name = "Lollipops",
+                        Description = "Colorful assorted lollipops.",
+                        Image = "/images/treats/lollipop.png",
+                        Points = 2,
+                        Inventory = 100,
+                        MinAge = 3,
+                        MaxAge = 99,
+                        CategoryId = 4,
+                        Lettering = "Happy BDay Jeff!",
+                        LetteringColor = "Red"
+                    },
+                    new Treat {
+                        Id = 3,
+                        Name = "Cupcakes",
+                        Description = "Vanilla cupcakes with sprinkles.",
+                        Image = "/images/treats/cupcake.png",
+                        Points = 4,
+                        Inventory = 80,
+                        MinAge = 0,
+                        MaxAge = 99,
+                        CategoryId = 4,
+                    },
+                    new Treat {
+                        Id = 4,
+                        Name = "Pumpkin Pie",
+                        Description = "Assorted fruit-flavored gummy bears.",
+                        Image = "/images/treats/pie.png",
+                        Points = 3,
+                        Inventory = 150,
+                        MinAge = 3,
+                        MaxAge = 99,
+                        CategoryId = 4,
+                        Lettering = "Stay Cool Brother!",
+                    }
+                };
+                context.AddRange(sweetTreats);
+                context.SaveChanges();
+            }
 
         }
     }

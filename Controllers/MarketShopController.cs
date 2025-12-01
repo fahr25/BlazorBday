@@ -41,5 +41,12 @@ namespace BlazorBday.Controllers
             return Ok(books);
         }
 
+        [HttpGet("treats")]
+        public async Task<ActionResult<List<Treat>>> GetAllSweetTreats()
+        {
+            var treats = await _db.SweetTreats.ToListAsync();
+            return Ok(treats);
+        }
+
     }
 }

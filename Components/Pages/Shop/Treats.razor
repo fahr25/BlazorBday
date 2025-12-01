@@ -1,0 +1,59 @@
+@page "/shop/treats"
+
+@using BlazorBday.Models;
+
+@inject HttpClient HttpClient
+
+<PageTitle>Shop - Sweet Treats</PageTitle>
+
+<h1>Sweet Treats</h1>
+
+
+<div class="container py-5">
+   <div class="row mb-lg-4">
+
+      @foreach (var treat in birthdayTreats)
+      {
+         <div class="col-6 col-lg-3 mb-4">
+            <div class="treat shadow border-0 h-100">
+               <img src="@treat.Image" class="treat-img-top" alt="@treat.Name" style="height: 200px; object-fit: cover;" />
+
+               <div class="treat-body p-4">
+                  <div class="lc-block text-center mb-3">
+                     <div editable="rich">
+                        <h3 class="fw-light">@treat.Name</h3>
+                     </div>
+                  </div>
+
+                  <div class="lc-block text-center mb-4">
+                     <div editable="rich">
+                        <p class="text-muted">@treat.Description</p>
+                     </div>
+                  </div>
+
+                  <div class="lc-block text-center">
+                     <p class="fw-bold mb-0">Points: @treat.Points</p>
+                  </div>
+
+                  <button class="btn btn-outline-danger mt-4">Add to Cart</button>
+               </div>
+            </div>
+         </div>
+      }
+   </div>
+</div> 
+
+<PointsCart></PointsCart>
+
+
+@code {
+    @inject NavigationManager NavigationManager;
+
+    List<Treat> birthdayTreats = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: Add error handling
+        birthdayTreats = await HttpClient.GetFromJsonAsync<List<Treat>>(NavigationManager.BaseUri + "api/marketshop/treats");
+    }
+}
