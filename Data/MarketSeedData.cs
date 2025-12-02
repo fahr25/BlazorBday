@@ -22,7 +22,15 @@ public class MarketSeedData
     public static async Task InitializeAsync(IServiceProvider serviceProvider)
     {
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+
+        // Create Admin role if it doesn't exist
+        const string adminRole = "Admin";
+        if (!await roleManager.RoleExistsAsync(adminRole))
+        {
+            await roleManager.CreateAsync(new IdentityRole(adminRole));
+        }
 
         // Check if any users exist
         if (userManager.Users.Any())
@@ -48,6 +56,9 @@ public class MarketSeedData
         {
             throw new Exception($"Failed to create admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
         }
+
+        // Assign Admin role to the user
+        await userManager.AddToRoleAsync(adminUser, adminRole);
     }
     
     public async Task SeedAsync()
