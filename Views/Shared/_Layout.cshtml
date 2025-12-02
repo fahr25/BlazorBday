@@ -12,10 +12,14 @@
 
 <body>
 
-    <div class="d-flex" id="wrapper">
+    <div class="d-flex">
+
         <!-- Sidebar-->
-        <div class="border-end bg-white" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-light">CelebrateMe Admin</div>
+        <div class="border-end bg-white">
+            <div>
+                <img src="/bday-connect-logo.png" alt="logo" height="64px" width="256px" />
+            </div>
+
             <div class="list-group">
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Admin" asp-action="Index">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Admin" asp-action="Inventory">Inventory</a>
@@ -24,6 +28,7 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Admin" asp-action="Agencies">Agencies</a>
             </div>
         </div>
+        
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
             <!-- Top navigation-->
@@ -49,11 +54,12 @@
                     </div>
                 </div>
             </nav>
+
             <!-- Page content-->
-            <div class="">
-                
+            <div class="p-4">
                 @RenderBody()
             </div>
+
         </div>
     </div>
 

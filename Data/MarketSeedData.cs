@@ -32,33 +32,36 @@ public class MarketSeedData
             await roleManager.CreateAsync(new IdentityRole(adminRole));
         }
 
-        // Check if any users exist
-        if (userManager.Users.Any())
-        {
-            return; // Admin already exists
-        }
-
         // Read admin credentials from configuration (WARNING: CHANGE THIS IN PRODUCTION)
         var adminEmail = configuration["DefaultAdmin:Email"] ?? "admin@celebrateme.com";
         var adminPassword = configuration["DefaultAdmin:Password"] ?? "Admin123!";
 
-        // Create default admin user
-        var adminUser = new ApplicationUser
-        {
-            UserName = adminEmail,
-            Email = adminEmail,
-            EmailConfirmed = true
-        };
+        // Check if admin user exists
+        var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-        var result = await userManager.CreateAsync(adminUser, adminPassword);
-
-        if (!result.Succeeded)
+        if (adminUser == null)
         {
-            throw new Exception($"Failed to create admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            // Create default admin user
+            adminUser = new ApplicationUser
+            {
+                UserName = adminEmail,
+                Email = adminEmail,
+                EmailConfirmed = true
+            };
+
+            var result = await userManager.CreateAsync(adminUser, adminPassword);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception($"Failed to create admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            }
         }
 
-        // Assign Admin role to the user
-        await userManager.AddToRoleAsync(adminUser, adminRole);
+        // Ensure admin user has Admin role (handles existing users without role)
+        if (!await userManager.IsInRoleAsync(adminUser, adminRole))
+        {
+            await userManager.AddToRoleAsync(adminUser, adminRole);
+        }
     }
     
     public async Task SeedAsync()
