@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Category Management Help";
+}
+
+<h1>Category Management Guide</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>Understanding Display Order</h3>
+    </div>
+    <div class="card-body">
+        <p><strong>Display Order controls the sequence customers see categories during shopping.</strong></p>
+
+        <h5>How It Works</h5>
+        <ul>
+            <li><strong>Lower numbers appear first</strong> - Category with DisplayOrder 1 appears before DisplayOrder 2</li>
+            <li>Customers browse categories in order during the multi-step shopping process</li>
+            <li>You can change the order anytime without affecting existing data</li>
+        </ul>
+
+        <h5>Example Shopping Flow</h5>
+        <div class="alert alert-info">
+            <p><strong>If your categories are ordered like this:</strong></p>
+            <table class="table table-sm table-bordered bg-white">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Display Order</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Toys</td><td>1</td></tr>
+                    <tr><td>Books</td><td>2</td></tr>
+                    <tr><td>Treats</td><td>3</td></tr>
+                    <tr><td>Gifts</td><td>4</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Customers will shop in this sequence:</strong></p>
+            <p>Step 1: Toys → Step 2: Books → Step 3: Treats → Step 4: Gifts → Review Cart → Checkout</p>
+        </div>
+
+        <h5>Best Practices</h5>
+        <ul>
+            <li><strong>Put popular items first</strong> - Engage customers with bestsellers</li>
+            <li><strong>End with quick add-ons</strong> - Birthday cards, small gifts last</li>
+            <li><strong>Use gaps in numbering</strong> - Use 10, 20, 30 instead of 1, 2, 3 to allow easy insertion later</li>
+            <li><strong>Seasonal adjustments</strong> - Bump seasonal categories up temporarily</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>Active vs Inactive Categories</h3>
+    </div>
+    <div class="card-body">
+        <p><strong>IsActive Flag</strong> - Controls whether customers can see this category</p>
+        <ul>
+            <li><strong>Active (checked)</strong> - Visible to customers during shopping</li>
+            <li><strong>Inactive (unchecked)</strong> - Hidden from customers but data preserved</li>
+        </ul>
+        <p class="text-muted">
+            <em>Tip: Use inactive status for seasonal categories (e.g., hide "Valentine's Gifts" outside February)
+            or when temporarily out of stock for an entire category.</em>
+        </p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>Subcategories</h3>
+    </div>
+    <div class="card-body">
+        <p>Subcategories help organize products within each main category.</p>
+        <ul>
+            <li>Each subcategory belongs to one parent category</li>
+            <li>Subcategories also use Display Order for sorting</li>
+            <li>Products can be assigned to a category with an optional subcategory</li>
+        </ul>
+        <p><strong>Example:</strong></p>
+        <ul>
+            <li>Category: <strong>Books</strong>
+                <ul>
+                    <li>Subcategory: Picture Books (Display Order: 1)</li>
+                    <li>Subcategory: Chapter Books (Display Order: 2)</li>
+                    <li>Subcategory: Educational (Display Order: 3)</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Categories" class="btn btn-primary">Manage Categories</a>
+    <a asp-action="Subcategories" class="btn btn-primary">Manage Subcategories</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+</div>

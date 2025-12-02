@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CelebrateMe</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CelebrateMe.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    @* <main role="main" class="pb-3">
+        @RenderBody()
+    </main> *@
+
+    <div class="page">
+        <div class="sidebar">
+            <AdminDashboardMenu />
+        </div>
+
+        <main>
+            <div class="top-row px-4">
+                <a class="btn btn-light" href="">Logout</a>
+            </div>
+
+            <article class="content px-4">
+                @RenderBody()
+            </article>
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

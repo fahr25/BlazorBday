@@ -1,0 +1,56 @@
+@model List<BlazorBday.Models.Category>
+
+@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<h1>Categories</h1>
+
+<div class="alert alert-info">
+    <strong>💡 Display Order Tip:</strong> Lower numbers appear first in the shopping flow.
+    Use 10, 20, 30 instead of 1, 2, 3 to allow easy reordering later.
+    <a asp-action="CategoriesHelp" class="alert-link">View full guide</a>
+</div>
+
+<div class="mb-3">
+    <a class="btn btn-primary" asp-action="CreateCategory">Create New Category</a>
+    <a class="btn btn-info" asp-action="CategoriesHelp">Help Guide</a>
+    <a class="btn btn-secondary" asp-action="Index">Back to Dashboard</a>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr class="table-secondary">
+            <th>Order</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Active</th>
+            <th>Subcategories</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.DisplayOrder</td>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+                <td>@(category.IsActive ? "Yes" : "No")</td>
+                <td>@category.Subcategories.Count</td>
+                <td>
+                    <a asp-action="CategoryDetails" asp-route-id="@category.Id">Details</a> |
+                    <a asp-action="EditCategory" asp-route-id="@category.Id">Edit</a> |
+                    <a asp-action="DeleteCategory" asp-route-id="@category.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="6">No categories found.</td></tr>
+    }
+    </tbody>
+</table>

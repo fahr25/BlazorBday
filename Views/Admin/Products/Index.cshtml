@@ -1,0 +1,103 @@
+@model List<BlazorBday.Models.Product>
+
+@{
+    ViewData["Title"] = "Inventory Management";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Inventory Management</h1>
+        <p class="text-muted">Manage all products and inventory levels</p>
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-outline-secondary">← Back to Dashboard</a>
+        <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Subcategory</th>
+                    <th>Points</th>
+                    <th>Inventory</th>
+                    <th>Age Range</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var product in Model)
+            {
+                var rowClass = "";
+                var inventoryBadge = "";
+
+                if (product.Inventory == 0)
+                {
+                    rowClass = "table-danger";
+                    inventoryBadge = "<span class='badge bg-danger ms-1'>Out of Stock</span>";
+                }
+                else if (product.Inventory < 5)
+                {
+                    rowClass = "table-warning";
+                    inventoryBadge = "<span class='badge bg-warning text-dark ms-1'>Low Stock</span>";
+                }
+
+                <tr class="@rowClass">
+                    <td style="width: 80px;">
+                        @if (!string.IsNullOrEmpty(product.Image))
+                        {
+                            <img src="@product.Image" alt="@product.Name" class="img-thumbnail" style="max-width: 60px; max-height: 60px;">
+                        }
+                        else
+                        {
+                            <span class="text-muted">No image</span>
+                        }
+                    </td>
+                    <td>
+                        <strong>@product.Name</strong>
+                        @if (!string.IsNullOrEmpty(product.Description))
+                        {
+                            <br><small class="text-muted">@product.Description</small>
+                        }
+                    </td>
+                    <td>@product.Category?.Name</td>
+                    <td>@(product.Subcategory?.Name ?? "-")</td>
+                    <td><span class="badge bg-info">@product.Points pts</span></td>
+                    <td>
+                        <strong>@product.Inventory</strong>
+                        @Html.Raw(inventoryBadge)
+                    </td>
+                    <td>@product.MinAge - @product.MaxAge</td>
+                    <td style="white-space: nowrap;">
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-outline-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-3">
+        <p class="text-muted">
+            <strong>Total Products:</strong> @Model.Count |
+            <strong>Low Stock:</strong> @Model.Count(p => p.Inventory > 0 && p.Inventory < 5) |
+            <strong>Out of Stock:</strong> @Model.Count(p => p.Inventory == 0)
+        </p>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <h4>No products found</h4>
+        <p>Get started by creating your first product.</p>
+        <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+    </div>
+}
