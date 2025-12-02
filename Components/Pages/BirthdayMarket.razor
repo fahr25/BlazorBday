@@ -2,20 +2,25 @@
 
 <PageTitle>Birthday Market</PageTitle>
 
+<style>
+    section {
+        min-height: 100vh;
+        background: #B0DEDB;
+        background: radial-gradient(circle, rgba(176, 222, 219, 1) 0%, rgba(176, 202, 222, 1) 100%);
+    }
+</style>
+
 <section>
-    <div class="d-flex text-center" lc-helper="background">
+    <div class="d-flex text-center">
         <div class="my-5 align-self-center w-100 py-5">
-            <div editable="rich">
-                <h2 class="display-4">This could be your</h2>
-                <h2 class="display-4">call to action</h2>
-                <p>Lorem int ipsum dolor sit amet when an<br>&nbsp;unknown printer took a galley of
-                    type.</p>
-                <p class="text-white">Vivamus id tempor.</p>
+            <div>
+                <img src="/images/dogo.png" alt="dogo watching" width="300px" height="300px">
             </div>
 
             <!-- TODO: add proper link functionality to buttons -->
-            <a class="btn btn-lg btn-light w-25 mx-3" href="shop/login" role="button">Families</a>
-            <a class="btn btn-lg btn-light w-25 mx-3" href="admin/home" role="button">Admin</a>
+            <a class="btn btn-lg btn-market-primary shadow-md w-50" href="shop/login" role="button">Families</a>
+            
+            <a class="btn btn-lg btn-market-secondary shadow-md w-50" href="admin/home" role="button">Admin</a>
         </div>
     </div>
 </section>

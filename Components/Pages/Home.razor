@@ -2,11 +2,100 @@
 
 <PageTitle>Home</PageTitle>
 
-<section class="hero">
-    <h1>Welcome to <em>Birthday Connections!</em></h1>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-primary {
+    background-color: #e9a323;
+    border-color: #f5d69e;
+  }
+
+  .btn-primary:hover {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+  }
+
+  .logo-placeholder {
+    background: linear-gradient(to bottom right, #6366f1, #a855f7);
+  }
+</style>
+
+
+<!-- Hero Section -->
+<section class="min-vh-100 d-flex align-items-center py-5">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-8">
+
+        <!-- Logo / Brand -->
+        <div class="mb-5">
+          <div class="logo-placeholder w-20 h-20 mx-auto rounded-4 d-inline-block"></div>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="display-3 fw-bold mb-4">
+          Birthday Connections
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="lead fs-4 text-muted mb-5 col-lg-10 mx-auto">
+          We help low-income families in Kansas City celebrate their children's birthdays with joy, dignity, and love.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+          <a href="#features" class="btn btn-primary btn-lg px-5 shadow-sm">
+            Get Started
+          </a>
+          <a href="#features" class="btn btn-outline-secondary btn-lg px-5">
+            Learn more
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission Section -->
+<section class="py-5" style="background-color: #eb6657;">
+  <div class="container py-5">
+    <h2 class="display-5 fw-bold text-center mb-5">Our Mission</h2>
     <p>@welcomeMessage</p>
+    <div class="row row-cols-1 row-cols-md-3 g-5 text-center">
+      <div class="col">
+        <div class="card p-4">
+          <div
+            class="bg-primary bg-opacity-10 text-primary rounded-circle w-16 h-16 d-inline-flex align-items-center justify-content-center fs-2 mb-4">
+            500+
+          </div>
+          <h4 class="text-muted">Birthdays Celebrated</h4>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card p-4">
+          <div
+            class="bg-primary bg-opacity-10 text-primary rounded-circle w-16 h-16 d-inline-flex align-items-center justify-content-center fs-2 mb-4">
+            100%
+          </div>
+          <h4 class="text-muted">Free to Families</h4>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card p-4">
+          <div
+            class="bg-primary bg-opacity-10 text-primary rounded-circle w-16 h-16 d-inline-flex align-items-center justify-content-center fs-2 mb-4">
+            20+
+          </div>
+          <h4 class="text-muted">Community Sponsors</h4>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 @code {
-    private string welcomeMessage = "Our mission is to ensure all children are celebrated on their birthdays! ";
+    private string welcomeMessage = "Our mission is to ensure all children are celebrated on their birthdays. We provide free birthday supplies and support to low-income families in Kansas City, because every child deserves to feel special on their big day. ";
 }
