@@ -6,6 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Exclude test projects from compilation -->
+  <ItemGroup>
+    <Compile Remove="BlazorBday.Tests\**" />
+    <Compile Remove="BlazorBday.IntegrationTests\**" />
+    <Content Remove="BlazorBday.Tests\**" />
+    <Content Remove="BlazorBday.IntegrationTests\**" />
+    <EmbeddedResource Remove="BlazorBday.Tests\**" />
+    <EmbeddedResource Remove="BlazorBday.IntegrationTests\**" />
+    <None Remove="BlazorBday.Tests\**" />
+    <None Remove="BlazorBday.IntegrationTests\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.22">

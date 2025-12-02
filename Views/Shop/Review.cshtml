@@ -42,45 +42,91 @@
 
                     <!-- Cart Items -->
                     <h5>Your Items</h5>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Product</th>
-                                <th>Points</th>
-                                <th>Qty</th>
-                                <th>Subtotal</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Items)
-                            {
+
+                    <!-- Desktop Table View -->
+                    <div class="table-responsive d-none d-md-block">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>@item.CategoryName</td>
-                                    <td>@item.ProductName</td>
-                                    <td>@item.UnitPoints</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@item.Subtotal</td>
-                                    <td>
-                                        <form method="post" asp-action="RemoveItem" class="d-inline">
-                                            @Html.AntiForgeryToken()
-                                            <input type="hidden" name="productId" value="@item.ProductId" />
-                                            <input type="hidden" name="returnAction" value="Review" />
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-                                        </form>
-                                    </td>
+                                    <th>Category</th>
+                                    <th>Product</th>
+                                    <th>Points</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                    <th></th>
                                 </tr>
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4" class="text-end"><strong>Total:</strong></td>
-                                <td><strong>@Model.PointsUsed points</strong></td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td>@item.CategoryName</td>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.UnitPoints</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@item.Subtotal</td>
+                                        <td>
+                                            <form method="post" asp-action="RemoveItem" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                                <input type="hidden" name="returnAction" value="Review" />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                    <td><strong>@Model.PointsUsed points</strong></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- Mobile Card View -->
+                    <div class="d-md-none">
+                        @foreach (var item in Model.Items)
+                        {
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h6 class="card-title mb-1">@item.ProductName</h6>
+                                            <small class="text-muted">@item.CategoryName</small>
+                                        </div>
+                                        <span class="badge bg-primary">@item.Subtotal pts</span>
+                                    </div>
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Unit Points</small>
+                                            <strong>@item.UnitPoints</strong>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Quantity</small>
+                                            <strong>@item.Quantity</strong>
+                                        </div>
+                                    </div>
+                                    <form method="post" asp-action="RemoveItem">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <input type="hidden" name="returnAction" value="Review" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger w-100">Remove Item</button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong>Total:</strong>
+                                    <strong class="text-primary">@Model.PointsUsed points</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Actions -->
                     <div class="d-grid gap-2">
