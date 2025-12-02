@@ -1,13 +1,22 @@
 @model BlazorBday.Models.OrderDraft
+
 @{
+    Layout = "_ShopLayout";
     ViewData["Title"] = "Tell Us About Your Child";
 }
+
+<style>
+    body {
+        background: linear-gradient(180deg, #C8B5E8 0%, #FFB8B8 100%);
+        min-height: 100vh;
+    }
+</style>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+            <div class="card shadow" style="border-radius: var(--radius);">
+                <div class="card-header text-white" style="background-color: var(--brand); border-radius: var(--radius) var(--radius) 0 0;">
                     <h3 class="mb-0">Tell Us About Your Child</h3>
                 </div>
                 <div class="card-body">
@@ -19,7 +28,7 @@
                         <div class="alert alert-danger">@TempData["Error"]</div>
                     }
 
-                    <div class="alert alert-info">
+                    <div class="alert" style="background-color: var(--accent); border: none; border-radius: 12px;">
                         <strong>Points Allocation:</strong><br/>
                         Children ages 0-11: <strong>65 points</strong><br/>
                         Children ages 12-18: <strong>100 points</strong>
@@ -41,8 +50,8 @@
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">Calculate Points & Continue</button>
-                            <a asp-action="SelectAgency" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-lg" style="background-color: var(--brand); color: white; border: none; border-radius: 25px; font-weight: 600;">Calculate Points & Continue</button>
+                            <a asp-action="SelectAgency" class="btn" style="background-color: var(--muted); color: white; border: none; border-radius: 25px;">Back</a>
                         </div>
                     </form>
                 </div>

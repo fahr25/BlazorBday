@@ -1,29 +1,46 @@
 :root {
-  --brand: #e47e71;
-  --accent: #806c1b;
-  --bg: #f7fbfb;
-  --text: #122222;
-  --muted: #5a6a6a;
-  --radius: 12px;
+  --brand: #6B5B95;
+  --accent: #C8B5E8;
+  --bg: #ffffff;
+  --text: #6B5B95;
+  --muted: #9B8BC0;
+  --radius: 16px;
 }
 
 html,
 body {
   font-family: "Poppins", Helvetica, Arial, sans-serif;
-  color: #583131;
+  color: var(--text);
 }
 
 .btn-market-primary, .btn-market-secondary {
   margin-bottom: 2rem;
-  padding: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
 }
 
 .btn-market-primary {
-  background-color: coral;
+  background-color: var(--brand);
+}
+
+.btn-market-primary:hover {
+  background-color: #5A4A7F;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 91, 149, 0.4);
 }
 
 .btn-market-secondary {
-  background-color: khaki;
+  background-color: var(--brand);
+}
+
+.btn-market-secondary:hover {
+  background-color: #5A4A7F;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 91, 149, 0.4);
 }
 
 /* Cart widget */

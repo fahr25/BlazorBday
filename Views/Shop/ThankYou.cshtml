@@ -1,17 +1,26 @@
 @model BlazorBday.Models.Order
+
 @{
+    Layout = "_ShopLayout";
     ViewData["Title"] = "Thank You!";
 }
+
+<style>
+    body {
+        background: linear-gradient(180deg, #C8B5E8 0%, #FFB8B8 100%);
+        min-height: 100vh;
+    }
+</style>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card shadow">
-                <div class="card-header bg-success text-white text-center">
+            <div class="card shadow" style="border-radius: var(--radius);">
+                <div class="card-header text-white text-center" style="background-color: var(--brand); border-radius: var(--radius) var(--radius) 0 0;">
                     <h2 class="mb-0">🎉 Thank You for Shopping! 🎉</h2>
                 </div>
                 <div class="card-body">
-                    <div class="alert alert-success text-center">
+                    <div class="alert text-center" style="background-color: var(--accent); border: none; border-radius: 12px;">
                         <h4>Your order has been successfully placed!</h4>
                         <p class="mb-0">Order #@Model.Id</p>
                     </div>
@@ -62,14 +71,14 @@
                         </tfoot>
                     </table>
 
-                    <div class="alert alert-info">
+                    <div class="alert" style="background-color: var(--accent); border: none; border-radius: 12px;">
                         <h5>What's Next?</h5>
                         <p>Your items will be prepared for pickup. Please contact your agency for pickup details.</p>
                         <p class="mb-0">Thank you for participating in the Birthday Market program!</p>
                     </div>
 
                     <div class="d-grid mt-4">
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">Return to Home</a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-lg" style="background-color: var(--brand); color: white; border: none; border-radius: 25px; font-weight: 600;">Return to Home</a>
                     </div>
                 </div>
             </div>

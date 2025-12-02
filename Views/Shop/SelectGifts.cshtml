@@ -1,5 +1,7 @@
 @model List<BlazorBday.Models.Product>
+
 @{
+    Layout = "_ShopLayout";
     ViewData["Title"] = "Select Gifts";
     var subcategories = ViewData["Subcategories"] as List<BlazorBday.Models.Subcategory> ?? new List<BlazorBday.Models.Subcategory>();
     var selectedSubcategoryId = ViewData["SelectedSubcategoryId"] as int?;
@@ -8,12 +10,19 @@
     var pointsRemaining = ViewData["PointsRemaining"] as int? ?? 0;
 }
 
+<style>
+    body {
+        background: linear-gradient(180deg, #C8B5E8 0%, #FFB8B8 100%);
+        min-height: 100vh;
+    }
+</style>
+
 <div class="container-fluid mt-4">
     <div class="row">
         <!-- Main Gift Selection Area -->
         <div class="col-md-9">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
+            <div class="card shadow-sm mb-4" style="border-radius: var(--radius);">
+                <div class="card-header text-white" style="background-color: var(--brand); border-radius: var(--radius) var(--radius) 0 0;">
                     <h3 class="mb-0">Step 7: Select Gifts</h3>
                 </div>
                 <div class="card-body">
@@ -52,8 +61,8 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-primary">Apply Filters</button>
-                                    <a asp-action="SelectGifts" class="btn btn-secondary">Clear Filters</a>
+                                    <button type="submit" class="btn" style="background-color: var(--brand); color: white; border: none; border-radius: 25px; font-weight: 600; padding: 0.5rem 1.5rem;">Apply Filters</button>
+                                    <a asp-action="SelectGifts" class="btn" style="background-color: var(--muted); color: white; border: none; border-radius: 25px; padding: 0.5rem 1.5rem;">Clear Filters</a>
                                 </div>
                             </form>
                         </div>
@@ -90,7 +99,7 @@
                                             {
                                                 <p class="text-muted small">Age: @product.MinAge-@product.MaxAge</p>
                                             }
-                                            <p class="text-primary fw-bold">@product.Points points</p>
+                                            <p class="fw-bold" style="color: var(--brand);">@product.Points points</p>
                                             <p class="text-muted small">In stock: @product.Inventory</p>
                                         </div>
                                         <div class="card-footer">
@@ -99,7 +108,7 @@
                                                 <input type="hidden" name="productId" value="@product.Id" />
                                                 <input type="hidden" name="categoryName" value="Gifts" />
                                                 <input type="hidden" name="returnAction" value="SelectGifts" />
-                                                <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                                                <button type="submit" class="btn w-100" style="background-color: var(--brand); color: white; border: none; border-radius: 25px; font-weight: 600;">Add to Cart</button>
                                             </form>
                                         </div>
                                     </div>
@@ -109,7 +118,7 @@
                     }
 
                     <div class="mt-4 d-grid">
-                        <a asp-action="Review" class="btn btn-success btn-lg">Proceed to Review Cart</a>
+                        <a asp-action="Review" class="btn btn-lg" style="background-color: var(--brand); color: white; border: none; border-radius: 25px; font-weight: 600;">Proceed to Review Cart</a>
                     </div>
                 </div>
             </div>
