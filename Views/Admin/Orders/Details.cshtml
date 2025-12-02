@@ -14,7 +14,8 @@
     </tbody>
 </table>
 
-<form asp-action="ChangeStatus" asp-controller="AdminOrders" method="post">
+<form asp-action="ChangeStatus" asp-controller="Admin" method="post">
+    @Html.AntiForgeryToken()
     <input type="hidden" name="id" value="@Model.Id" />
     <select name="status" class="form-select mb-2">
         <option value="Pending" selected="@(@Model.Status==BlazorBday.Models.OrderStatus.Pending)">Pending</option>
@@ -24,7 +25,8 @@
     <button class="btn btn-primary">Update Status</button>
 </form>
 
-<form asp-action="Refund" asp-controller="AdminOrders" method="post" class="mt-2">
+<form asp-action="Refund" asp-controller="Admin" method="post" class="mt-2">
+    @Html.AntiForgeryToken()
     <input type="hidden" name="id" value="@Model.Id" />
     <button class="btn btn-danger">Refund (restore inventory + cancel)</button>
 </form>

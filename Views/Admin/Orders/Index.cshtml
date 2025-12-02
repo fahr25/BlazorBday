@@ -13,7 +13,7 @@
             <td>@o.PointsUsed</td>
             <td>@o.Status</td>
             <td>@o.CreatedAt.ToLocalTime()</td>
-            <td><a asp-action="Details" asp-controller="AdminOrders" asp-route-id="@o.Id">Details</a></td>
+            <td><a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@o.Id">Details</a></td>
         </tr>
     }
     </tbody>
