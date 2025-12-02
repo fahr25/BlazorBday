@@ -400,4 +400,62 @@ public class AdminController : Controller
         await _agencies.DeleteAsync(id);
         return RedirectToAction(nameof(Agencies));
     }
+
+    // ========== ORDER MANAGEMENT ==========
+
+    // GET: /Admin/Orders - Show all orders
+    public async Task<IActionResult> Orders()
+    {
+        var orders = await _orders.GetAllAsync();
+        return View("Orders/Index", orders);
+    }
+
+    // GET: /Admin/OrderDetails/5 - Show single order details
+    public async Task<IActionResult> OrderDetails(int? id)
+    {
+        if (id == null) return NotFound();
+        var order = await _orders.GetByIdAsync(id.Value);
+        if (order == null) return NotFound();
+        return View("Orders/Details", order);
+    }
+
+    // POST: /Admin/ChangeStatus - Update order status
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> ChangeStatus(int id, string status)
+    {
+        if (!Enum.TryParse<OrderStatus>(status, out var orderStatus))
+        {
+            TempData["Error"] = "Invalid order status";
+            return RedirectToAction(nameof(OrderDetails), new { id });
+        }
+
+        try
+        {
+            await _orders.UpdateStatusAsync(id, orderStatus);
+            TempData["Success"] = $"Order status updated to {status}";
+        }
+        catch (Exception ex)
+        {
+            TempData["Error"] = $"Failed to update order: {ex.Message}";
+        }
+
+        return RedirectToAction(nameof(OrderDetails), new { id });
+    }
+
+    // POST: /Admin/Refund - Refund order and restore inventory
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> Refund(int id)
+    {
+        try
+        {
+            await _orders.RefundAsync(id);
+            TempData["Success"] = "Order refunded successfully and inventory restored";
+        }
+        catch (Exception ex)
+        {
+            TempData["Error"] = $"Failed to refund order: {ex.Message}";
+        }
+
+        return RedirectToAction(nameof(OrderDetails), new { id });
+    }
 }
