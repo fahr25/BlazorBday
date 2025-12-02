@@ -1,0 +1,123 @@
+@model List<BlazorBday.Models.Product>
+@{
+    ViewData["Title"] = "Select Gifts";
+    var subcategories = ViewData["Subcategories"] as List<BlazorBday.Models.Subcategory> ?? new List<BlazorBday.Models.Subcategory>();
+    var selectedSubcategoryId = ViewData["SelectedSubcategoryId"] as int?;
+    var minPoints = ViewData["MinPoints"] as int?;
+    var maxPoints = ViewData["MaxPoints"] as int?;
+    var pointsRemaining = ViewData["PointsRemaining"] as int? ?? 0;
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Main Gift Selection Area -->
+        <div class="col-md-9">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Step 7: Select Gifts</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["Error"]</div>
+                    }
+
+                    <p class="lead">Use your remaining <strong>@pointsRemaining points</strong> to choose gifts!</p>
+
+                    <!-- Filters -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Filter Gifts</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="get" asp-action="SelectGifts">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="subcategoryId" class="form-label">Category</label>
+                                        <select id="subcategoryId" name="subcategoryId" class="form-select">
+                                            <option value="">All Categories</option>
+                                            @foreach (var sub in subcategories)
+                                            {
+                                                <option value="@sub.Id" selected="@(sub.Id == selectedSubcategoryId)">@sub.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="minPoints" class="form-label">Min Points</label>
+                                        <input type="number" id="minPoints" name="minPoints" class="form-control" value="@minPoints" min="0" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="maxPoints" class="form-label">Max Points</label>
+                                        <input type="number" id="maxPoints" name="maxPoints" class="form-control" value="@maxPoints" min="0" />
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                                    <a asp-action="SelectGifts" class="btn btn-secondary">Clear Filters</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    @if (Model.Count == 0)
+                    {
+                        <div class="alert alert-info">
+                            <p>No gifts match your current filters. Try adjusting the filters above.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            @foreach (var product in Model)
+                            {
+                                <div class="col">
+                                    <div class="card h-100">
+                                        @if (!string.IsNullOrEmpty(product.Image))
+                                        {
+                                            <img src="@product.Image" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: contain; padding: 10px;">
+                                        }
+                                        else
+                                        {
+                                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                                <span class="text-muted">No Image</span>
+                                            </div>
+                                        }
+                                        <div class="card-body">
+                                            <h5 class="card-title">@product.Name</h5>
+                                            <p class="card-text">@product.Description</p>
+                                            @if (product.MinAge > 0 || product.MaxAge > 0)
+                                            {
+                                                <p class="text-muted small">Age: @product.MinAge-@product.MaxAge</p>
+                                            }
+                                            <p class="text-primary fw-bold">@product.Points points</p>
+                                            <p class="text-muted small">In stock: @product.Inventory</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <form method="post" asp-action="AddItem">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="productId" value="@product.Id" />
+                                                <input type="hidden" name="categoryName" value="Gifts" />
+                                                <input type="hidden" name="returnAction" value="SelectGifts" />
+                                                <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <div class="mt-4 d-grid">
+                        <a asp-action="Review" class="btn btn-success btn-lg">Proceed to Review Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Summary Sidebar -->
+        <div class="col-md-3">
+            @await Html.PartialAsync("_CartSummary")
+        </div>
+    </div>
+</div>

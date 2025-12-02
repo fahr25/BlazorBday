@@ -1,0 +1,78 @@
+@model BlazorBday.Models.Order
+@{
+    ViewData["Title"] = "Thank You!";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white text-center">
+                    <h2 class="mb-0">🎉 Thank You for Shopping! 🎉</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success text-center">
+                        <h4>Your order has been successfully placed!</h4>
+                        <p class="mb-0">Order #@Model.Id</p>
+                    </div>
+
+                    <!-- Order Details -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Order Information</h5>
+                            <p><strong>Agency:</strong> @Model.Agency?.Name</p>
+                            <p><strong>Order Date:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                            <p><strong>Child Age:</strong> @Model.ChildAge years</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Points Summary</h5>
+                            <p><strong>Points Assigned:</strong> @Model.PointsAssigned</p>
+                            <p><strong>Points Used:</strong> @Model.PointsUsed</p>
+                            <p><strong>Points Remaining:</strong> @(Model.PointsAssigned - Model.PointsUsed)</p>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <h5>Your Items</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Points</th>
+                                <th>Qty</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.UnitPoints</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.SubtotalPoints</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                                <td><strong>@Model.PointsUsed points</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <div class="alert alert-info">
+                        <h5>What's Next?</h5>
+                        <p>Your items will be prepared for pickup. Please contact your agency for pickup details.</p>
+                        <p class="mb-0">Thank you for participating in the Birthday Market program!</p>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
