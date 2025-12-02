@@ -9,7 +9,7 @@ using BlazorBday.ViewModels;
 namespace BlazorBday.Controllers;
 
 
-[Authorize] // Require authentication for all admin actions
+[Authorize(Roles = "Admin")] // Require Admin role for all admin actions
 public class AdminController : Controller
 {
     private readonly IProductRepository _repo;
