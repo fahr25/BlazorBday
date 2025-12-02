@@ -2,6 +2,7 @@
 @using BlazorBday.Models
 @using BlazorBday.Services
 @using BlazorBday.Repositories
+@using System.ComponentModel.DataAnnotations
 @inject OrderStateService OrderState
 @inject IAgencyRepository AgencyRepo
 @inject NavigationManager Nav
@@ -9,7 +10,7 @@
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <StepIndicator CurrentStep="1" />
 
             <div class="card shadow">
@@ -21,12 +22,12 @@
 
                     <ErrorAlert ErrorMessage="@errorMessage" OnClear="@(() => errorMessage = null)" />
 
-                    <EditForm Model="@formModel" OnValidSubmit="HandleSubmit">
+                    <EditForm Model="@formModel" FormName="shopLoginForm" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleInvalidSubmit">
                         <DataAnnotationsValidator />
 
                         <div class="mb-3">
                             <label for="agencyId" class="form-label">Select Your Agency</label>
-                            <InputSelect id="agencyId" @bind-Value="formModel.AgencyId" class="form-select" required>
+                            <InputSelect id="agencyId" @bind-Value="formModel.AgencyId" class="form-select">
                                 <option value="">-- Select Agency --</option>
                                 @foreach (var agency in agencies)
                                 {
@@ -42,8 +43,7 @@
                                        @bind-Value="formModel.ThreeLetterCode"
                                        class="form-control text-uppercase"
                                        maxlength="3"
-                                       placeholder="ABC"
-                                       required />
+                                       placeholder="ABC" />
                             <small class="form-text text-muted">Enter the unique 3-letter code provided by your agency.</small>
                             <ValidationMessage For="@(() => formModel.ThreeLetterCode)" />
                         </div>
@@ -63,6 +63,7 @@
         </div>
     </div>
 </div>
+
 
 @code {
     private List<Agency> agencies = new();
@@ -140,9 +141,20 @@
         }
     }
 
+    private void HandleInvalidSubmit()
+    {
+        errorMessage = "Please complete all required fields correctly.";
+        isLoading = false;
+    }
+
     private class AgencyFormModel
     {
+        [Required(ErrorMessage = "Please select an agency")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please select an agency")]
         public int AgencyId { get; set; }
+
+        [Required(ErrorMessage = "Please enter your 3-letter code")]
+        [StringLength(3, MinimumLength = 3, ErrorMessage = "Code must be exactly 3 letters")]
         public string ThreeLetterCode { get; set; } = string.Empty;
     }
 }

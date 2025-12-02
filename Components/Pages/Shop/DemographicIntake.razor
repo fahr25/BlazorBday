@@ -71,7 +71,7 @@
         // Prerequisite check: Agency must be selected
         if (OrderState.AgencyId == null)
         {
-            Nav.NavigateTo("/shop/agency");
+            Nav.NavigateTo("/shop/login");
             return;
         }
 
@@ -94,22 +94,16 @@
 
         try
         {
-            // Calculate age
-            var age = CalculateAge(formModel.ChildDateOfBirth);
-
-            // Validate age range
-            if (age < 0 || age > 18)
-            {
-                errorMessage = "Child must be between 0 and 18 years old.";
-                isLoading = false;
-                return;
-            }
-
-            // Save to OrderStateService
-            await OrderState.SetChildInfoAsync(formModel.ChildDateOfBirth, age);
+            // Save to OrderStateService (age calculation now handled internally)
+            await OrderState.SetChildInfoAsync(formModel.ChildDateOfBirth);
 
             // Navigate to next step
             Nav.NavigateTo("/shop/ready");
+        }
+        catch (ArgumentException ex)
+        {
+            errorMessage = ex.Message;
+            isLoading = false;
         }
         catch (Exception ex)
         {
@@ -120,21 +114,7 @@
 
     private void GoBack()
     {
-        Nav.NavigateTo("/shop/agency");
-    }
-
-    private int CalculateAge(DateTime birthDate)
-    {
-        var today = DateTime.Today;
-        var age = today.Year - birthDate.Year;
-
-        // Adjust if birthday hasn't occurred yet this year
-        if (birthDate.Date > today.AddYears(-age))
-        {
-            age--;
-        }
-
-        return age;
+        Nav.NavigateTo("/shop/login");
     }
 
     private class DemographicFormModel

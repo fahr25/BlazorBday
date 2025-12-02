@@ -110,7 +110,7 @@
         // Prerequisite checks
         if (OrderState.AgencyId == null)
         {
-            Nav.NavigateTo("/shop/agency");
+            Nav.NavigateTo("/shop/login");
             return;
         }
 
@@ -176,6 +176,8 @@
                 PointsAssigned = OrderState.PointsAssigned,
                 PointsUsed = OrderState.PointsUsed,
                 TotalItems = OrderState.Items.Sum(i => i.Quantity),
+                CustomerName = "N/A",      // Add default value
+                CustomerEmail = "N/A",     // Add default value
                 Status = OrderStatus.Pending,
                 CreatedAt = DateTime.UtcNow,
                 Items = new List<OrderItem>()

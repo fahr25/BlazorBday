@@ -1,20 +1,20 @@
 using System.Text.Json;
 using BlazorBday.Models;
-using Microsoft.JSInterop;
 
 namespace BlazorBday.Services;
 
 public class OrderStateService
 {
     private OrderDraft _draft = new();
-    private readonly IJSRuntime _js;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private bool _isInitialized = false;
+    private const string SESSION_KEY = "OrderDraft";
 
     public event Action? OnChange;
 
-    public OrderStateService(IJSRuntime js)
+    public OrderStateService(IHttpContextAccessor httpContextAccessor)
     {
-        _js = js;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     // Expose OrderDraft properties
@@ -33,15 +33,17 @@ public class OrderStateService
     public IReadOnlyList<CartItem> Items => _draft.Items.AsReadOnly();
 
     /// <summary>
-    /// Initialize the service by loading state from localStorage
+    /// Initialize the service by loading state from Session
     /// </summary>
-    public async Task InitializeAsync()
+    public Task InitializeAsync()
     {
-        if (_isInitialized) return;
+        if (_isInitialized) return Task.CompletedTask;
 
         try
         {
-            var json = await _js.InvokeAsync<string>("orderStorage.load");
+            var session = _httpContextAccessor.HttpContext?.Session;
+            var json = session?.GetString(SESSION_KEY);
+
             if (!string.IsNullOrEmpty(json))
             {
                 var draft = JsonSerializer.Deserialize<OrderDraft>(json);
@@ -53,35 +55,49 @@ public class OrderStateService
         }
         catch (Exception)
         {
-            // If localStorage fails or doesn't exist, start with empty draft
+            // If Session fails or doesn't exist, start with empty draft
             _draft = new OrderDraft();
         }
 
         _isInitialized = true;
+        return Task.CompletedTask;
     }
 
     /// <summary>
     /// Set agency information from step 1
     /// </summary>
-    public async Task SetAgencyAsync(int agencyId, string agencyName, string threeLetterCode)
+    public Task SetAgencyAsync(int agencyId, string agencyName, string threeLetterCode)
     {
         _draft.AgencyId = agencyId;
         _draft.AgencyName = agencyName;
         _draft.ThreeLetterCode = threeLetterCode;
 
-        await SaveToStorageAsync();
+        SaveToSession();
         OnChange?.Invoke();
+        
+        return Task.CompletedTask; // Return completed task instead of using async
     }
 
     /// <summary>
     /// Set child demographic information from step 2
     /// </summary>
-    public async Task SetChildInfoAsync(DateTime childDateOfBirth, int childAge)
+    public async Task SetChildInfoAsync(DateTime childDateOfBirth)
     {
-        _draft.ChildDateOfBirth = childDateOfBirth;
-        _draft.ChildAge = childAge;
+        // Calculate child age from date of birth
+        var today = DateTime.Today;
+        var age = today.Year - childDateOfBirth.Year;
+        if (childDateOfBirth.Date > today.AddYears(-age)) age--; // Adjust if birthday hasn't occurred this year
 
-        await SaveToStorageAsync();
+        // Validate age range
+        if (age < 0 || age > 18)
+        {
+            throw new ArgumentException("Child age must be between 0 and 18 years.");
+        }
+
+        _draft.ChildDateOfBirth = childDateOfBirth;
+        _draft.ChildAge = age;
+
+        SaveToSession();
         OnChange?.Invoke();
     }
 
@@ -100,7 +116,7 @@ public class OrderStateService
             _draft.Items.Add(item);
         }
 
-        await SaveToStorageAsync();
+        SaveToSession();
         OnChange?.Invoke();
     }
 
@@ -113,7 +129,7 @@ public class OrderStateService
         if (item != null)
         {
             _draft.Items.Remove(item);
-            await SaveToStorageAsync();
+            SaveToSession();
             OnChange?.Invoke();
         }
     }
@@ -131,7 +147,7 @@ public class OrderStateService
 
         if (itemsToRemove.Any())
         {
-            await SaveToStorageAsync();
+            SaveToSession();
             OnChange?.Invoke();
         }
     }
@@ -142,7 +158,7 @@ public class OrderStateService
     public async Task ClearAsync()
     {
         _draft = new OrderDraft();
-        await SaveToStorageAsync();
+        SaveToSession();
         OnChange?.Invoke();
     }
 
@@ -155,18 +171,22 @@ public class OrderStateService
     }
 
     /// <summary>
-    /// Persist current state to browser localStorage
+    /// Persist current state to Session
     /// </summary>
-    private async Task SaveToStorageAsync()
+    private void SaveToSession()
     {
         try
         {
-            var json = JsonSerializer.Serialize(_draft);
-            await _js.InvokeVoidAsync("orderStorage.save", json);
+            var session = _httpContextAccessor.HttpContext?.Session;
+            if (session != null)
+            {
+                var json = JsonSerializer.Serialize(_draft);
+                session.SetString(SESSION_KEY, json);
+            }
         }
         catch (Exception)
         {
-            // Silently fail if localStorage is unavailable
+            // Silently fail if Session is unavailable
         }
     }
 }

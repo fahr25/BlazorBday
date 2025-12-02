@@ -14,13 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<OrderStateService>();
 
-builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
 
 // enable session for keeping OrderDraft
+builder.Services.AddHttpContextAccessor(); // Add this for IHttpContextAccessor
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -109,9 +108,11 @@ app.UseAuthorization();
 
 app.UseAntiforgery(); // <-- must come after UseAuthentication and UseAuthorization
 
+// Map Blazor components first (gives priority to Blazor routes)
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+// Map MVC controller routes (will be used when Blazor routes don't match)
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
 
