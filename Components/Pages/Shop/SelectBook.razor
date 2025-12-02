@@ -1,0 +1,147 @@
+@page "/shop/book"
+@using BlazorBday.Models
+@using BlazorBday.Services
+@using BlazorBday.Repositories
+@inject OrderStateService OrderState
+@inject IProductRepository ProductRepo
+@inject ICategoryRepository CategoryRepo
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-9">
+            <StepIndicator CurrentStep="5" />
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Step 5: Select a Book</h3>
+                </div>
+                <div class="card-body">
+                    <ErrorAlert ErrorMessage="@errorMessage" OnClear="@(() => errorMessage = null)" />
+
+                    @if (isLoading)
+                    {
+                        <div class="text-center p-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading books...</p>
+                        </div>
+                    }
+                    else if (products.Count == 0)
+                    {
+                        <div class="alert alert-warning">
+                            <p>No books are currently available. Please contact an administrator.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="lead">Choose one book to add to your cart.</p>
+
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            @foreach (var product in products)
+                            {
+                                <div class="col">
+                                    <ProductCard Product="@product"
+                                                 OnSelect="@HandleProductSelected"
+                                                 IsDisabled="@(OrderState.PointsRemaining < product.Points && !IsProductInCart(product.Id))"
+                                                 ButtonText="@(IsProductInCart(product.Id) ? "Selected ✓" : "Select This Book")" />
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <PointsCart />
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Product> products = new();
+    private string? errorMessage;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await OrderState.InitializeAsync();
+
+        // Prerequisite checks
+        if (!OrderState.HasCard)
+        {
+            Nav.NavigateTo("/shop/card");
+            return;
+        }
+
+        await LoadProductsAsync();
+    }
+
+    private async Task LoadProductsAsync()
+    {
+        isLoading = true;
+
+        try
+        {
+            // Get Books category
+            var categories = await CategoryRepo.GetAllAsync();
+            var bookCategory = categories.FirstOrDefault(c => c.Name == "Books");
+
+            if (bookCategory != null)
+            {
+                var allProducts = await ProductRepo.GetAllAsync();
+                products = allProducts
+                    .Where(p => p.CategoryId == bookCategory.Id && p.Inventory > 0)
+                    .OrderBy(p => p.Name)
+                    .ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Failed to load books. Please try again.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task HandleProductSelected(Product product)
+    {
+        try
+        {
+            // Remove existing book if any
+            if (OrderState.HasBook)
+            {
+                await OrderState.RemoveCategoryItemsAsync("Books");
+            }
+
+            // Add selected book
+            var cartItem = new CartItem
+            {
+                ProductId = product.Id,
+                ProductName = product.Name,
+                CategoryName = "Books",
+                UnitPoints = product.Points,
+                Quantity = 1
+            };
+
+            await OrderState.AddItemAsync(cartItem);
+
+            // Auto-navigate to next step
+            Nav.NavigateTo("/shop/treat");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Failed to add book. Please try again.";
+        }
+    }
+
+    private bool IsProductInCart(int productId)
+    {
+        return OrderState.Items.Any(i => i.ProductId == productId);
+    }
+}

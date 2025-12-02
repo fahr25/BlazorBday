@@ -1,48 +1,92 @@
 @using BlazorBday.Services
-@inject CartService CartService
+@inject OrderStateService OrderState
+@implements IDisposable
 
-<aside class="cart" aria-label="Shopping cart" id="cart-pane">
-    <h4>Cart <span id="cart-count" class="badge">@CartService.Items.Sum(i => i.Quantity)</span></h4>
-    <div class="cart-list" role="list">
-        @if (CartService.Items.Count == 0)
+<div class="card shadow-sm sticky-top" style="top: 20px;">
+    <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Your Cart</h5>
+    </div>
+    <div class="card-body">
+        <!-- Points Summary -->
+        <div class="alert alert-info mb-3">
+            <div class="d-flex justify-content-between">
+                <span>Total Points:</span>
+                <strong>@OrderState.PointsAssigned</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span>Used:</span>
+                <strong>@OrderState.PointsUsed</strong>
+            </div>
+            <hr class="my-2"/>
+            <div class="d-flex justify-content-between">
+                <span>Remaining:</span>
+                <strong class="text-primary">@OrderState.PointsRemaining</strong>
+            </div>
+        </div>
+
+        <!-- Cart Items -->
+        @if (OrderState.Items.Any())
         {
-            <div style="padding:8px;color:#556">Cart is empty</div>
+            <h6>Items in Cart:</h6>
+            <ul class="list-group mb-3">
+                @foreach (var item in OrderState.Items)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">@item.ProductName</div>
+                            <small class="text-muted">@item.CategoryName</small>
+                            <div class="text-primary">@item.UnitPoints pts</div>
+                        </div>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                @onclick="async () => await RemoveItem(item.ProductId)"
+                                title="Remove">
+                            ×
+                        </button>
+                    </li>
+                }
+            </ul>
+
+            <!-- Progress Checklist -->
+            <div class="card bg-light">
+                <div class="card-body p-2">
+                    <h6 class="mb-2">Progress:</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" disabled checked="@OrderState.HasCard" />
+                        <label class="form-check-label small">Card @(OrderState.HasCard ? "✓" : "")</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" disabled checked="@OrderState.HasBook" />
+                        <label class="form-check-label small">Book @(OrderState.HasBook ? "✓" : "")</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" disabled checked="@OrderState.HasTreat" />
+                        <label class="form-check-label small">Treat @(OrderState.HasTreat ? "✓" : "")</label>
+                    </div>
+                </div>
+            </div>
         }
         else
         {
-            @foreach (var item in CartService.Items)
-            {
-                <div class="cart-item">
-                    <div class="small-img" aria-hidden="true">🧺</div>
-                    <div style="flex:1">
-                        <div style="font-weight:700">@item.ProductName</div>
-                        <div style="color:#667">@item.Quantity * @item.UnitPoints pts</div>
-                    </div>
-                    <div style="text-align:right">
-                        <button class="btn ghost" @onclick="() => CartService.Increment(item.ProductId)">+</button>
-                        <button class="btn ghost" @onclick="() => CartService.Decrement(item.ProductId)">−</button>
-                    </div>
-                </div>
-            }
+            <p class="text-muted text-center">Your cart is empty</p>
         }
     </div>
-    <div class="total-row">
-        <div>Total</div>
-        <div class="cart-total">@CartService.GetTotal() pts</div>
-    </div>
-    <p style="margin-top:8px"><button class="btn" @onclick="Checkout">Checkout</button></p>
-</aside>
+</div>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        CartService.OnChange += StateHasChanged;
+        await OrderState.InitializeAsync();
+        OrderState.OnChange += StateHasChanged;
     }
 
-    private void Checkout()
+    private async Task RemoveItem(int productId)
     {
-        // Simulate (e.g., alert or navigate to a payment page)
-        // TODO: Implement actual checkout logic
-        Console.WriteLine("Checkout clicked!");
+        await OrderState.RemoveItemAsync(productId);
+    }
+
+    public void Dispose()
+    {
+        OrderState.OnChange -= StateHasChanged;
     }
 }

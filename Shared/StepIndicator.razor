@@ -1,0 +1,32 @@
+<div class="step-indicator mb-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+        @foreach (var step in Steps)
+        {
+            <div class="step-item @(step.Number <= CurrentStep ? "active" : "") @(step.Number == CurrentStep ? "current" : "")">
+                <div class="step-number">@step.Number</div>
+                <div class="step-label">@step.Label</div>
+            </div>
+            @if (step.Number < Steps.Count)
+            {
+                <div class="step-arrow">→</div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int CurrentStep { get; set; }
+
+    private List<(int Number, string Label)> Steps = new()
+    {
+        (1, "Agency"),
+        (2, "Demographics"),
+        (3, "Ready"),
+        (4, "Card"),
+        (5, "Book"),
+        (6, "Treat"),
+        (7, "Gifts"),
+        (8, "Review")
+    };
+}

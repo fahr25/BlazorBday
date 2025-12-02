@@ -15,6 +15,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<OrderStateService>();
 
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
