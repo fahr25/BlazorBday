@@ -1,13 +1,23 @@
 @model BlazorBday.Models.OrderDraft
+
+
 @{
+    Layout = "_ShopLayout";
     ViewData["Title"] = "Select Your Agency";
 }
+
+<style>
+    body {
+        background: linear-gradient(180deg, #C8B5E8 0%, #FFB8B8 100%);
+        min-height: 100vh;
+    }
+</style>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+            <div class="card shadow" style="border-radius: var(--radius);">
+                <div class="card-header text-white" style="background-color: var(--brand); border-radius: var(--radius) var(--radius) 0 0;">
                     <h3 class="mb-0">Welcome to the Birthday Market!</h3>
                 </div>
                 <div class="card-body">
@@ -47,7 +57,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+                            <button type="submit" class="btn btn-lg" style="background-color: var(--brand); color: white; border: none; border-radius: 25px; font-weight: 600;">Continue</button>
                         </div>
                     </form>
                 </div>

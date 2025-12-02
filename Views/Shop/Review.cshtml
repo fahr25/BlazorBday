@@ -1,13 +1,22 @@
 @model BlazorBday.Models.OrderDraft
+
 @{
+    Layout = "_ShopLayout";
     ViewData["Title"] = "Review Your Order";
 }
+
+<style>
+    body {
+        background: linear-gradient(180deg, #C8B5E8 0%, #FFB8B8 100%);
+        min-height: 100vh;
+    }
+</style>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card shadow">
-                <div class="card-header bg-info text-white">
+            <div class="card shadow" style="border-radius: var(--radius);">
+                <div class="card-header text-white" style="background-color: var(--brand); border-radius: var(--radius) var(--radius) 0 0;">
                     <h3 class="mb-0">Review Your Order</h3>
                 </div>
                 <div class="card-body">
@@ -77,9 +86,9 @@
                     <div class="d-grid gap-2">
                         <form method="post" asp-action="Checkout">
                             @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-success btn-lg w-100">Complete Order</button>
+                            <button type="submit" class="btn btn-lg w-100" style="background-color: var(--brand); color: white; border: none; border-radius: 25px; font-weight: 600;">Complete Order</button>
                         </form>
-                        <a asp-action="SelectGifts" class="btn btn-secondary">Continue Shopping</a>
+                        <a asp-action="SelectGifts" class="btn" style="background-color: var(--muted); color: white; border: none; border-radius: 25px;">Continue Shopping</a>
                     </div>
                 </div>
             </div>
