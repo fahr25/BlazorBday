@@ -17,7 +17,7 @@
 **Categories:**
 - DisplayOrder determines shopping sequence
 - IsActive enables soft delete/seasonal toggling
-- Required: Cards (1), Books (2), Treats (3), Gifts (4)
+- Required: Cards (10), Books (20), Treats (30), Gifts (40)
 
 ## Code Style
 - Brief comments, descriptive names

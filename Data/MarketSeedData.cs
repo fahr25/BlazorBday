@@ -22,6 +22,7 @@ public class MarketSeedData
     public static async Task InitializeAsync(IServiceProvider serviceProvider)
     {
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
         // Check if any users exist
         if (userManager.Users.Any())
@@ -29,16 +30,19 @@ public class MarketSeedData
             return; // Admin already exists
         }
 
+        // Read admin credentials from configuration (WARNING: CHANGE THIS IN PRODUCTION)
+        var adminEmail = configuration["DefaultAdmin:Email"] ?? "admin@celebrateme.com";
+        var adminPassword = configuration["DefaultAdmin:Password"] ?? "Admin123!";
+
         // Create default admin user
         var adminUser = new ApplicationUser
         {
-            UserName = "admin@celebrateme.com",
-            Email = "admin@celebrateme.com",
+            UserName = adminEmail,
+            Email = adminEmail,
             EmailConfirmed = true
         };
 
-        // Default password - should be changed after first login
-        var result = await userManager.CreateAsync(adminUser, "Admin123!");
+        var result = await userManager.CreateAsync(adminUser, adminPassword);
 
         if (!result.Succeeded)
         {
@@ -119,10 +123,10 @@ public class MarketSeedData
         Console.WriteLine("Seeding products based on uploaded images...");
 
         // Create subcategories for Gifts
-        var toysSubcat = new Subcategory { Name = "Toys", Description = "Fun toys for kids", CategoryId = giftsCategory.Id, IsActive = true };
-        var techSubcat = new Subcategory { Name = "Electronics", Description = "Tech gadgets and accessories", CategoryId = giftsCategory.Id, IsActive = true };
-        var giftCardsSubcat = new Subcategory { Name = "Gift Cards", Description = "Store gift cards", CategoryId = giftsCategory.Id, IsActive = true };
-        var sportsSubcat = new Subcategory { Name = "Sports", Description = "Sports equipment and toys", CategoryId = giftsCategory.Id, IsActive = true };
+        var toysSubcat = new Subcategory { Name = "Toys", Description = "Fun toys for kids", CategoryId = giftsCategory.Id, IsActive = true, DisplayOrder = 10 };
+        var techSubcat = new Subcategory { Name = "Electronics", Description = "Tech gadgets and accessories", CategoryId = giftsCategory.Id, IsActive = true, DisplayOrder = 20 };
+        var giftCardsSubcat = new Subcategory { Name = "Gift Cards", Description = "Store gift cards", CategoryId = giftsCategory.Id, IsActive = true, DisplayOrder = 30 };
+        var sportsSubcat = new Subcategory { Name = "Sports", Description = "Sports equipment and toys", CategoryId = giftsCategory.Id, IsActive = true, DisplayOrder = 40 };
 
         _db.Subcategories.AddRange(toysSubcat, techSubcat, giftCardsSubcat, sportsSubcat);
         await _db.SaveChangesAsync();
