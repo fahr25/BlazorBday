@@ -48,11 +48,11 @@
 
 
 @code {
-    List<Book> books = new();
+    List<Product> books = new();
 
     protected override async Task OnInitializedAsync()
     {
-        // TODO: Add error handling
-        books = await HttpClient.GetFromJsonAsync<List<Book>>(NavigationManager.BaseUri + "api/marketshop/books");
+        // TODO: Update to use new API endpoint or remove if using MVC views
+        // books = await HttpClient.GetFromJsonAsync<List<Product>>(NavigationManager.BaseUri + "api/shop/products?category=Books");
     }
 }

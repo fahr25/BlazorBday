@@ -49,11 +49,11 @@
 @code {
     @inject NavigationManager NavigationManager;
 
-    List<Treat> birthdayTreats = new();
+    List<Product> birthdayTreats = new();
 
     protected override async Task OnInitializedAsync()
     {
-        // TODO: Add error handling
-        birthdayTreats = await HttpClient.GetFromJsonAsync<List<Treat>>(NavigationManager.BaseUri + "api/marketshop/treats");
+        // TODO: Update to use new API endpoint or remove if using MVC views
+        // birthdayTreats = await HttpClient.GetFromJsonAsync<List<Product>>(NavigationManager.BaseUri + "api/shop/products?category=Treats");
     }
 }
