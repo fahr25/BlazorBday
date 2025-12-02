@@ -5,7 +5,6 @@ using BlazorBday.Components;
 using BlazorBday.Data;
 using BlazorBday.Models;
 using BlazorBday.Repositories;
-using BlazorBday.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddScoped<OrderStateService>();
+// OrderStateService removed - MVC Shop uses session-based state instead
+// builder.Services.AddScoped<OrderStateService>();
 
 builder.Services.AddControllersWithViews();
 
