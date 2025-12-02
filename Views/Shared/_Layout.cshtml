@@ -12,10 +12,14 @@
 
 <body>
 
+    <button class="btn btn-primary d-lg-none mobile-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
     <div class="container-fluid h-100">
         <div class="row h-100">
 
-            <div class="sidebar bg-light">
+            <div class="sidebar bg-light" id="sidebar">
                 <div class="pt-2 h-100">
 
                     <div class="menu list-group list-group-flush pt-5">
@@ -25,6 +29,19 @@
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Admin" asp-action="Categories">Categories</a>
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Admin" asp-action="Agencies">Agencies</a>
                     </div>
+
+                    <div class="m-2">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <span class="text-muted d-block mb-2">Welcome, @User.Identity.Name</span>
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-secondary">Logout</button>
+                        </form>
+                    }
+
+
+    </div>
                 </div>
             </div>
 

@@ -4,74 +4,7 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<style>
-    .gradient-card {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: transform 0.2s;
-    }
-    .gradient-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 12px rgba(0,0,0,0.15);
-    }
-    .gradient-pink {
-        background: linear-gradient(135deg, #FF6B9D 0%, #FFA07A 100%);
-    }
-    .gradient-blue {
-        background: linear-gradient(135deg, #4A90E2 0%, #67B5F5 100%);
-    }
-    .gradient-teal {
-        background: linear-gradient(135deg, #48C9B0 0%, #56E3C8 100%);
-    }
-    .gradient-warning {
-        background: linear-gradient(135deg, #FFC107 0%, #FFD54F 100%);
-    }
-    .gradient-danger {
-        background: linear-gradient(135deg, #E74C3C 0%, #FF6B6B 100%);
-    }
-    .metric-label {
-        font-size: 0.95rem;
-        font-weight: 500;
-        opacity: 0.95;
-        margin-bottom: 8px;
-    }
-    .metric-value {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-    .metric-subtitle {
-        font-size: 0.85rem;
-        opacity: 0.9;
-    }
-    .dashboard-header {
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 20px;
-        margin-bottom: 30px;
-    }
-    .action-btn {
-        border-radius: 8px;
-        padding: 10px 20px;
-        font-weight: 500;
-        transition: all 0.2s;
-    }
-    .action-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-</style>
 
-<div class="mb-4">
-    <h5 class="mb-3">Quick Actions</h5>
-    <div class="btn-group flex-wrap" role="group">
-        <a class="btn btn-outline-primary action-btn" asp-action="Inventory">View All Inventory</a>
-        <a class="btn btn-outline-primary action-btn" asp-action="Create">Create New Product</a>
-        <a class="btn btn-outline-primary action-btn" asp-action="Categories">Manage Categories</a>
-        <a class="btn btn-outline-primary action-btn" asp-action="Subcategories">Manage Subcategories</a>
-        <a class="btn btn-outline-primary action-btn" asp-action="Agencies">Manage Agencies</a>
-    </div>
-</div>
 
 <div>
     <!-- Inventory Summary Cards -->
@@ -79,7 +12,7 @@
         <h4 class="mb-4">Inventory Overview</h4>
         <div class="row g-4 mb-4">
             <!-- Total Products Card -->
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card gradient-card gradient-pink text-white">
                     <div class="card-body">
                         <div class="metric-label">Total Products</div>
@@ -90,7 +23,7 @@
             </div>
 
             <!-- Low Stock Alert Card -->
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card gradient-card @(Model.InventoryStats.LowStockCount > 0 ? "gradient-warning text-dark" : "gradient-teal text-white")">
                     <div class="card-body">
                         <div class="metric-label">Low Stock Items</div>
@@ -107,7 +40,7 @@
             </div>
 
             <!-- Out of Stock Card -->
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card gradient-card @(Model.InventoryStats.OutOfStockCount > 0 ? "gradient-danger" : "gradient-teal") text-white">
                     <div class="card-body">
                         <div class="metric-label">Out of Stock</div>
@@ -124,7 +57,7 @@
             </div>
 
             <!-- Recent Orders Card -->
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card gradient-card gradient-blue text-white">
                     <div class="card-body">
                         <div class="metric-label">Recent Orders</div>
