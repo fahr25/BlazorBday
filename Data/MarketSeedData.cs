@@ -1,4 +1,6 @@
 using BlazorBday.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorBday.Data;
 
