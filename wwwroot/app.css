@@ -144,6 +144,23 @@ body {
     bottom: 1rem;
   }
 
+  /* Bottom spacing to prevent content obscuring by fixed cart bar */
+  .mb-mobile-cart {
+    margin-bottom: 120px;
+    padding-bottom: 20px;
+  }
+
+  /* Hide desktop cart sidebar on mobile */
+  .col-md-3:has(.cart-summary-card) {
+    display: none;
+  }
+
+  /* Make main content full width on mobile when cart sidebar hidden */
+  .col-md-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
   /* Responsive typography */
   h1 {
     font-size: 1.75rem;
@@ -172,5 +189,119 @@ body {
   .btn-outline-danger {
     min-height: 44px;
     font-size: 0.9rem;
+  }
+}
+
+/* ===== MOBILE CART BOTTOM BAR ===== */
+
+/* Mobile Bottom Bar - Fixed at bottom on mobile */
+.mobile-cart-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  background: white;
+  box-shadow: 0 -4px 12px rgba(107, 91, 149, 0.15);
+  border-top: 2px solid var(--accent);
+  padding: 0;
+}
+
+.mobile-cart-trigger {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--muted) 100%);
+  border: none;
+  color: white;
+  padding: 1rem 1.5rem;
+  min-height: 60px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.mobile-cart-trigger:active {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(107, 91, 149, 0.3);
+}
+
+.cart-icon {
+  font-size: 1.5rem;
+}
+
+.cart-count-badge {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.cart-points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.points-label {
+  font-size: 0.7rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+
+.points-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.expand-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+/* Offcanvas Customizations */
+.cart-offcanvas {
+  height: 85vh;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.cart-offcanvas .offcanvas-header {
+  background-color: var(--brand);
+  color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.cart-offcanvas .offcanvas-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* Remove card styling when inside offcanvas */
+.cart-offcanvas .card {
+  box-shadow: none;
+  border: 1px solid var(--accent);
+}
+
+.cart-offcanvas .card-header {
+  display: none;
+}
+
+/* iOS Safe Areas - prevent bottom bar from being obscured by notch */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .mobile-cart-bar {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Desktop Styles - >= 769px */
+@media (min-width: 769px) {
+  /* Desktop cart sticky behavior */
+  .cart-summary-card {
+    position: sticky;
+    top: 20px;
+  }
+
+  /* Hide mobile cart bar on desktop */
+  .mobile-cart-bar {
+    display: none !important;
   }
 }

@@ -6,7 +6,7 @@
     var draft = string.IsNullOrEmpty(sessionStr) ? new OrderDraft() : JsonSerializer.Deserialize<OrderDraft>(sessionStr);
 }
 
-<div class="card shadow-sm sticky-top" style="top: 20px; border-radius: var(--radius);">
+<div class="card shadow-sm cart-summary-card" style="border-radius: var(--radius);">
     <div class="card-header text-white" style="background-color: var(--brand); border-radius: var(--radius) var(--radius) 0 0;">
         <h5 class="mb-0">Your Cart</h5>
     </div>
