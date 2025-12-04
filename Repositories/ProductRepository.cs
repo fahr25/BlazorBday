@@ -23,7 +23,12 @@ public class ProductRepository : IProductRepository
 
     public async Task UpdateAsync(Product product)
     {
-        _db.Products.Update(product);
+        // Load existing entity to avoid navigation property conflicts
+        var existingProduct = await _db.Products.FindAsync(product.Id);
+        if (existingProduct == null) return;
+
+        // Update only scalar properties
+        _db.Entry(existingProduct).CurrentValues.SetValues(product);
         await _db.SaveChangesAsync();
     }
 

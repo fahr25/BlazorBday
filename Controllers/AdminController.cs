@@ -80,6 +80,10 @@ public class AdminController : Controller
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Product product)
     {
+        // Remove navigation property validation errors since they're not bound from form
+        ModelState.Remove("Category");
+        ModelState.Remove("Subcategory");
+
         if (!ModelState.IsValid)
         {
             ViewBag.Categories = await _categories.GetActiveAsync();
@@ -107,6 +111,10 @@ public class AdminController : Controller
     public async Task<IActionResult> Edit(int id, Product product)
     {
         if (id != product.Id) return BadRequest();
+
+        // Remove navigation property validation errors since they're not bound from form
+        ModelState.Remove("Category");
+        ModelState.Remove("Subcategory");
 
         if (!ModelState.IsValid)
         {
@@ -259,6 +267,10 @@ public class AdminController : Controller
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateSubcategory(Subcategory subcategory)
     {
+        // Remove navigation property validation errors since they're not bound from form
+        ModelState.Remove("Category");
+        ModelState.Remove("Products");
+
         if (!ModelState.IsValid)
         {
             ViewBag.Categories = await _categories.GetActiveAsync();
@@ -285,6 +297,10 @@ public class AdminController : Controller
     public async Task<IActionResult> EditSubcategory(int id, Subcategory subcategory)
     {
         if (id != subcategory.Id) return BadRequest();
+
+        // Remove navigation property validation errors since they're not bound from form
+        ModelState.Remove("Category");
+        ModelState.Remove("Products");
 
         if (!ModelState.IsValid)
         {

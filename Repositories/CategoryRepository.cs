@@ -55,7 +55,12 @@ public class CategoryRepository : ICategoryRepository
     // Update existing category
     public async Task UpdateAsync(Category category)
     {
-        _context.Categories.Update(category);
+        // Load existing entity to avoid navigation property conflicts
+        var existingCategory = await _context.Categories.FindAsync(category.Id);
+        if (existingCategory == null) return;
+
+        // Update only scalar properties
+        _context.Entry(existingCategory).CurrentValues.SetValues(category);
         await _context.SaveChangesAsync();
     }
 

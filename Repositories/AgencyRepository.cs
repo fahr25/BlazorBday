@@ -33,7 +33,12 @@ public class AgencyRepository : IAgencyRepository
 
     public async Task UpdateAsync(Agency agency)
     {
-        _context.Agencies.Update(agency);
+        // Load existing entity to avoid navigation property conflicts
+        var existingAgency = await _context.Agencies.FindAsync(agency.Id);
+        if (existingAgency == null) return;
+
+        // Update only scalar properties
+        _context.Entry(existingAgency).CurrentValues.SetValues(agency);
         await _context.SaveChangesAsync();
     }
 

@@ -313,6 +313,39 @@ public class MarketSeedData
                 MinAge = 10,
                 MaxAge = 14,
                 CategoryId = booksCategory.Id
+            },
+            new Product
+            {
+                Name = "Untamed",
+                Description = "Empowering read for young minds",
+                Points = 17,
+                Inventory = 20,
+                MinAge = 12,
+                MaxAge = 18,
+                CategoryId = booksCategory.Id,
+                Image = "/images/books/Untamed-Gross.jpg"
+            },
+            new Product
+            {
+                Name = "When Stars are Scattered",
+                Description = "Touching graphic novel about hope",
+                Points = 16,
+                Inventory = 25,
+                MinAge = 9,
+                MaxAge = 15,
+                CategoryId = booksCategory.Id,
+                Image = "/images/books/When Stars are Scattered.jpg"
+            },
+            new Product
+            {
+                Name = "Paint by Sticker",
+                Description = "Interactive sticker art activity book",
+                Points = 14,
+                Inventory = 30,
+                MinAge = 5,
+                MaxAge = 12,
+                CategoryId = booksCategory.Id,
+                Image = "/images/books/paint-by-sticker.jpg"
             }
         };
 
@@ -403,6 +436,39 @@ public class MarketSeedData
                 MinAge = 2,
                 MaxAge = 18,
                 CategoryId = treatsCategory.Id
+            },
+            new Product
+            {
+                Name = "Chocolate Birthday Cake",
+                Description = "Rich chocolate layered cake",
+                Points = 14,
+                Inventory = 30,
+                MinAge = 0,
+                MaxAge = 18,
+                CategoryId = treatsCategory.Id,
+                Image = "/images/treats/chocolate-cake.png"
+            },
+            new Product
+            {
+                Name = "Strawberry Delight Cake",
+                Description = "Fresh strawberry frosted cake",
+                Points = 14,
+                Inventory = 30,
+                MinAge = 0,
+                MaxAge = 18,
+                CategoryId = treatsCategory.Id,
+                Image = "/images/treats/strawberry-cake.png"
+            },
+            new Product
+            {
+                Name = "Celebration Cake",
+                Description = "Special birthday celebration cake",
+                Points = 13,
+                Inventory = 35,
+                MinAge = 0,
+                MaxAge = 18,
+                CategoryId = treatsCategory.Id,
+                Image = "/images/treats/cake2.png"
             }
         };
 
@@ -584,6 +650,90 @@ public class MarketSeedData
                 MaxAge = 18,
                 CategoryId = giftsCategory.Id,
                 SubcategoryId = giftCardsSubcat.Id
+            },
+            new Product
+            {
+                Name = "Connect 4 Game",
+                Description = "Classic Connect 4 strategy game",
+                Points = 20,
+                Inventory = 30,
+                MinAge = 6,
+                MaxAge = 18,
+                CategoryId = giftsCategory.Id,
+                SubcategoryId = toysSubcat.Id,
+                Image = "/images/gifts/connect-4.jpg"
+            },
+            new Product
+            {
+                Name = "Sorry! Board Game",
+                Description = "Classic Sorry! family board game",
+                Points = 22,
+                Inventory = 25,
+                MinAge = 6,
+                MaxAge = 18,
+                CategoryId = giftsCategory.Id,
+                SubcategoryId = toysSubcat.Id,
+                Image = "/images/gifts/sorry.jpg"
+            },
+            new Product
+            {
+                Name = "Yahtzee Classic",
+                Description = "Classic Yahtzee dice game",
+                Points = 18,
+                Inventory = 30,
+                MinAge = 8,
+                MaxAge = 18,
+                CategoryId = giftsCategory.Id,
+                SubcategoryId = toysSubcat.Id,
+                Image = "/images/gifts/yahtzee-classic.jpg"
+            },
+            new Product
+            {
+                Name = "Mini Pizza Play Set",
+                Description = "Pretend play pizza making set",
+                Points = 16,
+                Inventory = 25,
+                MinAge = 3,
+                MaxAge = 10,
+                CategoryId = giftsCategory.Id,
+                SubcategoryId = toysSubcat.Id,
+                Image = "/images/gifts/pizza-set.jpg"
+            },
+            new Product
+            {
+                Name = "3D Pin Art Toy",
+                Description = "Fun 3D pin impression art toy",
+                Points = 12,
+                Inventory = 35,
+                MinAge = 5,
+                MaxAge = 14,
+                CategoryId = giftsCategory.Id,
+                SubcategoryId = toysSubcat.Id,
+                Image = "/images/gifts/pin art.jpg"
+            },
+            new Product
+            {
+                Name = "Colorful Key Chain",
+                Description = "Fun and colorful keychain accessory",
+                Points = 8,
+                Inventory = 50,
+                MinAge = 8,
+                MaxAge = 18,
+                CategoryId = giftsCategory.Id,
+                SubcategoryId = toysSubcat.Id,
+                Image = "/images/gifts/key-chain.jpg"
+            },
+            new Product
+            {
+                Name = "Lava Lamp 14.5\"",
+                Description = "Mesmerizing 14.5 inch lava lamp",
+                Points = 35,
+                Inventory = 20,
+                MinAge = 10,
+                MaxAge = 18,
+                CategoryId = giftsCategory.Id,
+                SubcategoryId = techSubcat.Id,
+                Image = "/images/gifts/Lava Lamp , 14.5_ .png"
             }
         };
 

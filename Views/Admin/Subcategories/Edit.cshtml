@@ -7,7 +7,7 @@
 
 <h1>Edit Subcategory</h1>
 
-<form asp-action="EditSubcategory" method="post">
+<form asp-action="EditSubcategory" asp-route-id="@Model.Id" method="post">
     <input type="hidden" asp-for="Id" />
 
     <div class="mb-3">

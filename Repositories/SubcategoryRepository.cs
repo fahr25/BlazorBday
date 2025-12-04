@@ -58,7 +58,12 @@ public class SubcategoryRepository : ISubcategoryRepository
     // Update existing subcategory
     public async Task UpdateAsync(Subcategory subcategory)
     {
-        _context.Subcategories.Update(subcategory);
+        // Load existing entity to avoid navigation property conflicts
+        var existingSubcategory = await _context.Subcategories.FindAsync(subcategory.Id);
+        if (existingSubcategory == null) return;
+
+        // Update only scalar properties
+        _context.Entry(existingSubcategory).CurrentValues.SetValues(subcategory);
         await _context.SaveChangesAsync();
     }
 
